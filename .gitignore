@@ -1,0 +1,7 @@
+/phpunit.xml.dist
+/.phpunit.result.cache
+/vendor
+/testing
+/public/container.php 
+.env
+/helper.txt

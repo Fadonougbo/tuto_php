@@ -1,0 +1,11 @@
+{
+    "compilerOptions":
+    {
+        "outDir":"./public/asserts/js",
+        "target":"ESNext",
+        "moduleResolution":"node",
+        "strict":true
+    },
+
+    "include":["./public/asserts/ts"]
+}
