@@ -21,6 +21,19 @@ main #message_list {
   width: 100%;
   height: 70vh;
   border: solid 0.2rem var(--basic_color);
+  overflow-y: scroll;
+}
+main #message_list section {
+  margin: 1rem 0;
+}
+main #message_list section.active {
+  background: rgb(204, 197, 197);
+}
+main #message_list section.active h2 {
+  text-align: right;
+}
+main #message_list p {
+  font-size: 2rem;
 }
 
 main form {

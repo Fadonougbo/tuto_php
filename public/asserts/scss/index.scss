@@ -26,6 +26,28 @@ main #message_list
     width: 100%;
     height: 70vh;
     border:solid 0.2rem var(--basic_color);
+    overflow-y: scroll;
+
+    section 
+    {
+        margin: 1rem 0;
+    }
+
+    section.active 
+    {
+        background: rgb(204, 197, 197);
+    }
+
+    section.active h2 
+    {
+        text-align: right;
+
+    }
+
+    p 
+    {
+        font-size: 2rem;
+    }
 }
 
 main form 
