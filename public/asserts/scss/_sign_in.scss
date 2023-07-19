@@ -1,0 +1,49 @@
+
+#container
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+
+        text-align: center;
+        font-size: 4rem;
+        margin: 1rem 0;
+    }
+
+    section
+    {
+        width: 100%;
+        margin: 1.1rem 0;
+        display: flex;
+        justify-content: center;
+        
+    }
+
+
+    ul strong 
+    {
+        font-size: 2rem;
+        color: #ff6347;
+    }
+
+
+    form input 
+    {
+        width: 80%;
+        height: 4rem;
+    }
+
+    form button 
+    {
+        border:none;
+        background-color: var(--basic_color);
+        color: #fff;
+        width: 12%;
+        cursor: pointer;
+        padding: 0.7rem;
+    }
+
+
+}

@@ -1,0 +1,17 @@
+
+header 
+{
+    padding: 1rem;
+    display: flex;
+    height: 8rem;
+    align-items: center;
+    nav a
+    {
+        font-size: 2rem;
+        text-transform: capitalize;
+        background-color: var(--basic_color);
+        color: #fff;
+        margin:0 0.8rem;
+        padding: 0.7rem;
+    }
+}

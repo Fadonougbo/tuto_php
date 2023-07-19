@@ -9,9 +9,15 @@ define("D_S",DIRECTORY_SEPARATOR);
 $router=new AltoRouter();
 
 $router->map("GET","/","","home");
+$router->map("GET|POST","/login","","sign_in");
+$router->map("POST",'/logout','','logout');
+$router->map("GET|POST",'/create','','sign_up');
+
+/********API route*********** */
+$router->map("GET","/user","","user");
 $router->map("POST","/messages","","message_list");
 $router->map("POST","/new/message","","new_message");
-$router->map("GET","/user","","user");
+/*********************************/
 
 $match=$router->match();
 

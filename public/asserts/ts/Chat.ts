@@ -18,16 +18,25 @@ export class Chat
     {
         this.messageContainer=document.querySelector("#message_list") as HTMLDivElement
 
-        this.form=document.querySelector("form") as HTMLFormElement
+        this.form=document.querySelector("#message_form") as HTMLFormElement
 
         this.showMessageList=this.showMessageList.bind(this);
         this.setMessage=this.setMessage.bind(this)
+        this.getMessageList=this.getMessageList.bind(this)
 
-         this.getMessageList();
-         this.getUserMessage();
+        this.action();
 
     }
 
+    public autoReload(interval:number)
+    {
+        setTimeout(()=>{
+ /*            console.log("ok"); */
+           requestAnimationFrame(this.getMessageList)
+            this.autoReload(interval)
+        },interval)
+
+    }
 
     /**
      * Affiche la liste de tous les messages
@@ -48,7 +57,7 @@ export class Chat
     /**
      * Ajoute un message dans la base de donnees apres soumission du formulaire
      */
-    private async getUserMessage()
+    private async action()
     {
 
         const formSubmit=async (e:SubmitEvent)=>{
@@ -63,12 +72,11 @@ export class Chat
 
             if(data.message.trim()==="" && data.message.length<11)
             {
-                alert(`status:le champs message ne doit pas etre vide ❎❎❎`)
+                alert(`status:le champs message ne doit pas etre vide ❌❌❌`)
             }else 
             {
                 const response=await this.setMessage(formData)
-
-                response.status?alert(`status: ✅✅✅`):false;
+                !response.status?alert("Nous avons rencontré un problème ❌❌❌"):'';
             } 
             
         }
@@ -103,20 +111,32 @@ export class Chat
         .then((res)=>res.json())
         .then((data)=>data)
 
-        data.forEach((el)=>
+        this.messageContainer.innerHTML=""
+
+        if(Array.isArray(data)&&data.length===0)
         {
-            const {name,message,created_at,user_id}=el
-            console.log(id===user_id);
-            this.messageContainer.innerHTML+=`
-                <section class="${id===user_id?'active':''}">
-                   <h2 >
-                        <strong>${name}</strong>
-                        <span>${created_at}</span>
-                    </h2> 
-                    <p>${message}</p>
-                </section>
-            `
-        })
+            this.messageContainer.innerHTML="<h1>Aucun message</h1>"
+        }else 
+        {
+
+            data.forEach((el)=>
+            {
+                const {name,message,created_at,user_id}=el
+
+                if(this.messageContainer)
+                {
+                    this.messageContainer.innerHTML+=`
+                        <section class="${id===user_id?'active':''}">
+                        <h2>
+                                <strong>${name}</strong>
+                                <span>${created_at}</span>
+                            </h2> 
+                            <p>${message}</p>
+                            </section>
+                        `
+                }
+            })
+        }
     }
 
 }

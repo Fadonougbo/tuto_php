@@ -1,3 +1,9 @@
+<?php
+
+use App\Session;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +15,14 @@
     <script src="asserts/js/index.js" type="module" defer></script>
 </head>
 <body>
+    <header>
+        <nav>
+            <a href="/">home</a>
+            <?php if(!Session::keyExist("user")): ?>
+                <a href="/create">creer un compte</a>
+            <?php endif ?>
+        </nav>
+    </header>
     <?= $body; ?>
 </body>
 </html>

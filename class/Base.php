@@ -5,16 +5,18 @@ use GuzzleHttp\Psr7\ServerRequest;
 
 $request=ServerRequest::fromGlobals();
 
-if($match['name']==="home")
+$webRouteExist=in_array($match['name'],["home","sign_in","logout","sign_up"]);
+
+if($webRouteExist)
 {
 
     ob_start();
-        require dirname(__DIR__).D_S."template".D_S."home.php";
+        require dirname(__DIR__).D_S."template".D_S.$match['name'].".php";
     $body=ob_get_clean();
 
     require dirname(__DIR__).D_S."template".D_S."base.php";
 
-}else
+}else if(!$webRouteExist)
 {
     $crud=new Crud();
 
@@ -27,6 +29,9 @@ if($match['name']==="home")
     };
     
     echo $value;
+}else 
+{
+    throw new Exception("Aucune action n'est lié a cette route ");
 }
 
 ?>

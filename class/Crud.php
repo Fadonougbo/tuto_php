@@ -38,7 +38,8 @@ class Crud
      */
     public function getUser():string
     {
-        return json_encode(['id'=>1]);
+        $currentUser=Session::getValue("user");
+        return json_encode(['id'=>$currentUser->id]);
     }
 
     /**
@@ -48,7 +49,8 @@ class Crud
      */
     public function setMessage():string
     {
-        $user_id=1;
+        $currentUser=Session::getValue("user");
+        $user_id=$currentUser->id;
         $message=$_POST['message'];
 
         $q="INSERT INTO messages (message) VALUES(:message) ";
