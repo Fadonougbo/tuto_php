@@ -22,9 +22,9 @@ if($webRouteExist)
 
     $value=match($match['name'])
     {
-        "message_list"=>$crud->getAllMessage(),
-        "new_message"=>$crud->setMessage(),
-        "user"=>$crud->getUser(),
+        "message_list"=>$crud->getAllMessage(),// "/messages"
+        "new_message"=>$crud->setMessage(),// "/new/message"
+        "user"=>$crud->getUser(),// "/users"
         "default"=>json_encode(["message"=>"empty"])
     };
     

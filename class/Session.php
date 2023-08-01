@@ -57,7 +57,7 @@ class Session
 
         if( !isset($_SESSION[$key]) )
         {
-            throw new Exception("Cette clé n'exist pas");
+            false;
         }
 
         return $_SESSION[$key];

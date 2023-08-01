@@ -1,12 +1,17 @@
 export class Chat {
     messageContainer;
     form;
+    textInput;
     constructor() {
         this.messageContainer = document.querySelector("#message_list");
         this.form = document.querySelector("#message_form");
+        this.textInput = document.querySelector("textarea");
         this.showMessageList = this.showMessageList.bind(this);
         this.setMessage = this.setMessage.bind(this);
         this.getMessageList = this.getMessageList.bind(this);
+        /* this.keyAction=this.keyAction.bind(this) */
+        this.getMessageList();
+        /* this.keyAction() */
         this.action();
     }
     autoReload(interval) {
@@ -19,14 +24,14 @@ export class Chat {
     /**
      * Affiche la liste de tous les messages
      */
-    getMessageList() {
-        const data = fetch("/messages", {
+    async getMessageList() {
+        const data = await fetch("/messages", {
             method: "POST"
-        })
-            .then((res) => res.json())
-            .then((data) => {
-            this.showMessageList(data);
         });
+        const res = await data.json();
+        if (data) {
+            this.showMessageList(res);
+        }
     }
     /**
      * Ajoute un message dans la base de donnees apres soumission du formulaire
@@ -47,6 +52,20 @@ export class Chat {
         };
         this.form?.addEventListener("submit", formSubmit);
     }
+    /*  private  keyAction() {
+ 
+         const onKeyup=(e:KeyboardEvent)=> {
+             e.preventDefault();
+ 
+             if(e.key==="Enter") {
+                 this.form.focus()
+             }
+         }
+ 
+         this.textInput?.addEventListener("keyup",onKeyup)
+ 
+     }
+  */
     /**
      *
      * @param message
@@ -66,28 +85,31 @@ export class Chat {
      * @param data
      */
     async showMessageList(data) {
-        const { id } = await fetch("/user")
+        const userInfo = await fetch("/user")
             .then((res) => res.json())
             .then((data) => data);
         this.messageContainer.innerHTML = "";
+        if (!userInfo.id) {
+            this.messageContainer.innerHTML = "<h1>Aucun message</h1>";
+            return false;
+        }
         if (Array.isArray(data) && data.length === 0) {
             this.messageContainer.innerHTML = "<h1>Aucun message</h1>";
+            return false;
         }
-        else {
-            data.forEach((el) => {
-                const { name, message, created_at, user_id } = el;
-                if (this.messageContainer) {
-                    this.messageContainer.innerHTML += `
-                        <section class="${id === user_id ? 'active' : ''}">
-                        <h2>
-                                <strong>${name}</strong>
-                                <span>${created_at}</span>
-                            </h2> 
-                            <p>${message}</p>
-                            </section>
-                        `;
-                }
-            });
-        }
+        data.forEach((el) => {
+            const { name, message, created_at, user_id } = el;
+            if (this.messageContainer) {
+                this.messageContainer.innerHTML += `
+                    <section class="${userInfo.id === user_id ? 'active' : ''}">
+                    <h2>
+                            <strong>${name}</strong>
+                            <span>${created_at}</span>
+                        </h2> 
+                        <p>${message}</p>
+                        </section>
+                    `;
+            }
+        });
     }
 }

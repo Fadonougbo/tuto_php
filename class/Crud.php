@@ -38,8 +38,12 @@ class Crud
      */
     public function getUser():string
     {
+
         $currentUser=Session::getValue("user");
-        return json_encode(['id'=>$currentUser->id]);
+        if($currentUser) {
+            return json_encode(['id'=>$currentUser->id]);
+        }
+        return json_encode(['id'=>false]);
     }
 
     /**
@@ -50,6 +54,9 @@ class Crud
     public function setMessage():string
     {
         $currentUser=Session::getValue("user");
+        if(!$currentUser) {
+            return json_encode(["status"=>false]);
+        }
         $user_id=$currentUser->id;
         $message=$_POST['message'];
 

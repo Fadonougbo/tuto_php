@@ -12,6 +12,12 @@ class Auth
         $this->pdo=DB::getPdoConnection();
     }
 
+    /**
+     * Creation d'un nouveau utilisateur
+     *
+     * @param array $userinfo donnée de connection
+     * @return void|bool
+     */
     public function registerUser(array $userinfo)
     {
         $name=$userinfo['name'];
@@ -33,6 +39,12 @@ class Auth
         return $this->signUser($userinfo);
     }
 
+    /**
+     * Authentification d'un utilisateur
+     *
+     * @param array $userinfo
+     * @return void|bool
+     */
     public function signUser(array $userinfo)
     {
         $name=$userinfo['name']??"";
