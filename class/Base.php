@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\ServerRequest;
 $request=ServerRequest::fromGlobals();
 
 $webRouteExist=in_array($match['name'],["home","sign_in","logout","sign_up"]);
+$apiRouteExist=in_array($match['name'],['user',"new_message",'message_list']);
 
 if($webRouteExist)
 {
@@ -16,7 +17,7 @@ if($webRouteExist)
 
     require dirname(__DIR__).D_S."template".D_S."base.php";
 
-}else if(!$webRouteExist)
+}else if($apiRouteExist)
 {
     $crud=new Crud();
 
@@ -31,7 +32,7 @@ if($webRouteExist)
     echo $value;
 }else 
 {
-    throw new Exception("Aucune action n'est lié a cette route ");
+    echo json_encode("Aucune action n'est lié a cette route ");
 }
 
 ?>

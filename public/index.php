@@ -26,7 +26,7 @@ if($match)
     require dirname(__DIR__).D_S."class".D_S."Base.php";
 }else 
 {
-    echo "page not found";
+    echo json_encode(['message'=>"page not found"]);
 }
 
 
